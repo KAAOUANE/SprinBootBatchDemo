@@ -1,0 +1,40 @@
+<beans:beans xmlns="http://www.springframework.org/schema/batch"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/batch
+           http://www.springframework.org/schema/batch/spring-batch-3.0.xsd">
+
+    <job id="job1">
+        <split id="split_1" task-executor="taskExecutor" next="step4">
+            <flow>
+                <step id="step1">
+                    <tasklet ref="tasklet1"/>
+                </step>
+            </flow>
+            <flow>
+                <step id="step2">
+                    <tasklet ref="tasklet2"/>
+                </step>
+            </flow>
+            <flow>
+                <step id="step3">
+                    <tasklet ref="tasklet3"/>
+                </step>
+            </flow>
+        </split>
+        <step id="step4">
+            <tasklet ref="tasklet3"/>
+        </step>
+    </job>
+
+    <beans:bean id="tasklet1" class="com.demo.springbootbatch.step.TaskletPrintln"/>
+    <beans:bean id="tasklet2" class="com.demo.springbootbatch.step.TaskletPrintln"/>
+    <beans:bean id="tasklet3" class="com.demo.springbootbatch.step.TaskletPrintln"/>
+    <beans:bean id="tasklet4" class="com.demo.springbootbatch.step.TaskletPrintln"/>
+
+    <beans:bean id="taskExecutor" class="org.springframework.core.task.SimpleAsyncTaskExecutor"/>
+
+</beans:beans>
